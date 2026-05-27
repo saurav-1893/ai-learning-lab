@@ -26,4 +26,5 @@ with open(sys.argv[1]) as file:
         # print(row)
     print(f'Number of columns : {len(header)}')
     print(f'Number of rows : {count}')
-    print(missing)
+    for i, val in missing.items():
+        print(f'In column: {i} total missing values are: {missing[i]}')
