@@ -1,6 +1,7 @@
 import sys
 import os
 import csv
+import numpy as np
 
 def load_csv(filepath):
     with open(filepath) as file:
@@ -9,9 +10,7 @@ def load_csv(filepath):
         rows = list(reader)
     return header, rows
 
-def summarize_csv(filepath):
-        header, rows = load_csv(filepath)
-
+def summarize_csv(header, rows):
         missing = {}
         for i in header:
             missing[i] = 0
@@ -49,9 +48,7 @@ def get_command(args):
         return '--columns'
     sys.exit('Invalid command')
 
-def get_stats(filepath):
-        header, rows = load_csv(filepath)
- 
+def get_stats(header, rows): 
         numeric_data = {}
         for i in header:
             numeric_data[i] = []
@@ -67,26 +64,31 @@ def get_stats(filepath):
         for column, value in numeric_data.items():
             if value != []:
                 pure_numeric_data[column] = value
+
         final_stats = {}
         for column , value in pure_numeric_data.items():
-            x = {'count': len(value), 'min': min(value), 'max': max(value), 'mean': sum(value)/len(value)}
-            final_stats[column] = x
+            arr = np.array(value, dtype=float)
+            final_stats[column] = {
+                'count' : len(arr),
+                'min' : np.min(arr),
+                'max': np.max(arr),
+                'mean': np.mean(arr),
+                'median': np.median(arr),
+                'std' : np.std(arr, ddof=1)
+                }
                 
 
         return final_stats
 
-def print_stats(filepath):
-    for column_name , stats in get_stats(filepath).items():
+def print_stats(header, rows):
+    for column_name , stats in get_stats(header, rows).items():
         print(f'{column_name}')
         for stat_name, stat_value in stats.items():
             print(f'{stat_name} : {stat_value}')
 
-def print_columns(filepath):
-    header, _ = load_csv(filepath)
+def print_columns(header):
     for i in range(len(header)):
         print(f'{i+1}. {header[i]}')
-
-
 
 
 
@@ -94,9 +96,10 @@ def print_columns(filepath):
 def main():
     filepath = csv_file_check(sys.argv)
     command = get_command(sys.argv)
+    header, rows = load_csv(filepath)
 
     if command == '--summary':
-        total_columns, total_rows, missing_values = summarize_csv(filepath)
+        total_columns, total_rows, missing_values = summarize_csv(header, rows)
         print(f'Total columns are : {total_columns}')
         print(f'Total rows are : {total_rows}') 
         print('\nMissing values are:')
@@ -105,10 +108,10 @@ def main():
     
     elif command == '--stats':
         print(f'Stats:')
-        print_stats(filepath)
+        print_stats(header, rows)
     elif command == '--columns':
         print(f'Columns:')
-        print_columns(filepath)
+        print_columns(header)
 
 
 if __name__ == '__main__':
