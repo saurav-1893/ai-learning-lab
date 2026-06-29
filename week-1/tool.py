@@ -16,17 +16,14 @@ def summarize_csv(filepath):
         for i in header:
             missing[i] = 0
 
-        count = 0
-
         for row in rows:
-            count +=1
             for i, val in enumerate(row):
                 if val == '':
                     missing[header[i]] +=1
     
 
         columns = len(header)
-        number_of_rows = count
+        number_of_rows = len(rows)
     
         return columns, number_of_rows, missing
 
@@ -48,11 +45,13 @@ def get_command(args):
         return '--summary'
     if args[2] == '--stats':
         return '--stats'
+    if args[2] == '--columns':
+        return '--columns'
     sys.exit('Invalid command')
 
 def get_stats(filepath):
         header, rows = load_csv(filepath)
-
+ 
         numeric_data = {}
         for i in header:
             numeric_data[i] = []
@@ -81,7 +80,12 @@ def print_stats(filepath):
         print(f'{column_name}')
         for stat_name, stat_value in stats.items():
             print(f'{stat_name} : {stat_value}')
-    
+
+def print_columns(filepath):
+    header, _ = load_csv(filepath)
+    for i in range(len(header)):
+        print(f'{i+1}. {header[i]}')
+
 
 
 
@@ -102,6 +106,10 @@ def main():
     elif command == '--stats':
         print(f'Stats:')
         print_stats(filepath)
+    elif command == '--columns':
+        print(f'Columns:')
+        print_columns(filepath)
+
 
 if __name__ == '__main__':
     main()       
