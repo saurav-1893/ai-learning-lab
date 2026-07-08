@@ -11,9 +11,8 @@ def load_csv(filepath):
     return header, rows
 
 def summarize_csv(header, rows):
-        missing = {}
-        for i in header:
-            missing[i] = 0
+
+        missing = {i : 0 for i in header}
 
         for row in rows:
             for i, val in enumerate(row):
@@ -46,12 +45,15 @@ def get_command(args):
         return '--stats'
     if args[2] == '--columns':
         return '--columns'
+    if args[2] == '--filter':
+        if len(args) < 5:
+            sys.exit('Filter metrics not provided')
+        return '--filter'
     sys.exit('Invalid command')
 
 def get_stats(header, rows): 
-        numeric_data = {}
-        for i in header:
-            numeric_data[i] = []
+        
+        numeric_data = {i : [] for i in header}
 
         for row in rows:            
             for i, val in enumerate(row):
@@ -90,7 +92,13 @@ def print_columns(header):
     for i in range(len(header)):
         print(f'{i+1}. {header[i]}')
 
+def print_filter(header, rows, col_name, target_value):
+    if col_name not in header:
+        return None
+        
 
+    col_index = header.index(col_name)
+    return [row for row in rows if row[col_index] ==target_value]
 
 
 def main():
@@ -112,6 +120,16 @@ def main():
     elif command == '--columns':
         print(f'Columns:')
         print_columns(header)
+    elif command == '--filter':
+        matches = print_filter(header, rows, sys.argv[3], sys.argv[4])
+
+        if matches is None:
+            print(f'Column: {sys.argv[3]} not found in the dataset')
+        elif not matches:
+            print('No match found')
+        else:
+            print(matches)
+
 
 
 if __name__ == '__main__':
