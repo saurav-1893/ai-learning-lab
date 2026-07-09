@@ -92,7 +92,7 @@ def print_columns(header):
     for i in range(len(header)):
         print(f'{i+1}. {header[i]}')
 
-def print_filter(header, rows, col_name, target_value):
+def get_filter_matches(header, rows, col_name, target_value):
     if col_name not in header:
         return None
         
@@ -121,14 +121,15 @@ def main():
         print(f'Columns:')
         print_columns(header)
     elif command == '--filter':
-        matches = print_filter(header, rows, sys.argv[3], sys.argv[4])
+        matches = get_filter_matches(header, rows, sys.argv[3], sys.argv[4])
 
         if matches is None:
             print(f'Column: {sys.argv[3]} not found in the dataset')
         elif not matches:
             print('No match found')
         else:
-            print(matches)
+            for match in matches:
+                print(match)
 
 
 
