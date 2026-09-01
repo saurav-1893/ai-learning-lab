@@ -1,0 +1,21 @@
+employee_id,name,department,age,city,salary,start_date,start_flag,salary_flag,department_flag
+1001,John Smith,engineering,28.0,LONDON,52000.0,2022-01-15,OK,OK,OK
+1002,Sarah Jones,marketing,29.5,MANCHESTER,47000.0,2021-08-03,OK,OK,OK
+1003,Mike Brown,engineering,31.0,LONDON,,2020-11-20,OK,Need Reviewing,OK
+1004,Emily Davis,hr,27.0,OXFORD,39000.0,2023-02-11,OK,OK,OK
+1005,Tom Wilson,engineering,29.5,OXFORD,68000.0,2019-07-18,OK,OK,OK
+1006,Alice White,finance,34.0,LONDON,61000.0,2021-04-27,OK,OK,OK
+1007,David Green,finance,34.0,LONDON,61000.0,2021-04-27,OK,OK,OK
+1008,Chris Taylor,marketing,29.0,CAMBRIDGE,,2022-09-01,OK,Need Reviewing,OK
+1009,Olivia Moore,sales,26.0,CAMBRIDGE,45000.0,2023-01-05,OK,OK,OK
+1010,James Hall,sales,26.0,CAMBRIDGE,45000.0,2023-01-05,OK,OK,OK
+1011,Sophia King,engineering,32.0,BRISTOL,72000.0,,Need Reviewing,OK,OK
+1012,Daniel Lee,,30.0,BRISTOL,55000.0,2020-06-10,OK,OK,Needs Reviewing
+1013,Emma Scott,engineering,30.0,LEEDS,70000.0,2022-05-19,OK,OK,OK
+1014,Liam Young,engineering,30.0,LEEDS,70000.0,2022-05-19,OK,OK,OK
+1015,Noah Adams,engineering,30.0,LEEDS,70000.0,2022-05-19,OK,OK,OK
+1016,Grace Hill,hr,24.0,OXFORD,38000.0,2024-01-08,OK,OK,OK
+1017,Ethan Baker,marketing,24.0,MANCHESTER,46000.0,2024-01-09,OK,OK,OK
+1018,Chloe Carter,sales,29.5,CAMBRIDGE,43000.0,2023-06-12,OK,OK,OK
+1019,Ben Turner,engineering,29.0,LEEDS,-5000.0,2022-03-15,OK,Need Reviewing,OK
+1020,Isla Walker,engineering,29.0,LEEDS,69000.0,2022-03-15,OK,OK,OK
