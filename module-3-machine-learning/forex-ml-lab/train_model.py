@@ -15,7 +15,6 @@ def build_model():
         StandardScaler(),
         LogisticRegression(max_iter=1000)
     )
-
     return model
 
 def build_tree_model():
@@ -23,12 +22,10 @@ def build_tree_model():
 
 def train_model(model, X_train, y_train):
     model.fit(X_train, y_train)
-
     return model
 
 def evaluate_model(model, X_eval, y_eval):
     predictions = model.predict(X_eval)
-
     results = {
         'accuracy' : accuracy_score(y_eval, predictions),
         'precision' : precision_score(y_eval, predictions, zero_division=0),
@@ -62,15 +59,6 @@ def main():
 
     # Step 5: Split chronologically
 
-    # split_index = int(len(features_df)*0.8)
-    # X_train = X.iloc[:split_index - 1]
-    # X_test = X.iloc[split_index:]
-    # y_train = y.iloc[:split_index - 1]
-    # y_test = y.iloc[split_index:]
-
-    # X1_train = X1.iloc[:split_index - 1]
-    # X1_test = X1.iloc[split_index:]
-
     train_end = int(len(features_df)*0.6)
     validation_end = int(len(features_df)*0.8)
 
@@ -96,34 +84,13 @@ def main():
     raw_tree_model = build_tree_model()
     engineered_tree_model = build_tree_model()
 
-
-
     raw_model = train_model(raw_model, X_train, y_train)
     engineered_model = train_model(engineered_model, X1_train, y_train)
     baseline_model = train_model(baseline_model, X_train, y_train)
 
     tree_model_raw = train_model(raw_tree_model,X_train,y_train)
     tree_model_engineered = train_model(engineered_tree_model,X1_train,y_train)
-
     # predictions = model.predict(X_test)
-    # predictions1 = model1.predict(X1_test)
-
-    # accuracy = accuracy_score(y_test, predictions)
-    # accuracy1 = accuracy_score(y_test, predictions1)
-
-    # probabilities = model.predict_proba(X_test)
-    # probabilities1 = model1.predict_proba(X1_test)
-
-    # up_probabilities = probabilities[:,1]
-    # up_probabilities1 = probabilities1[:,1]
-
-    # threshold = 0.5
-
-    # custom_predictions = (up_probabilities>=threshold).astype(int)
-    # custom_predictions1 = (up_probabilities1>=threshold).astype(int)
-
-    # custom_accuracy = accuracy_score(y_test, custom_predictions)
-    # custom_accuracy1 = accuracy_score(y_test, custom_predictions1)
 
     # Step 7: Predict and evaluate
 
@@ -153,34 +120,6 @@ def main():
         'Engineered_Tree_validation': engineered_tree_validation_results
     })
 
-    # print(y_train.value_counts())
-    # print(y_test.value_counts())
-    # print(f'Accuracy : {accuracy:0.2%}')
-    # print('Confusion Matrix')
-    # print(confusion_matrix(y_test, predictions))
-    # print(probabilities[:5])
-    # print(f'Min Up Probability : {up_probabilities.min()}')
-    # print(f'Max Up Probability : {up_probabilities.max()}')
-    # print(f'Mean Up Probability : {up_probabilities.mean()}')
-    # print('Predicted classes')
-    # print(pd.Series(predictions).value_counts())
-    
-    # print("Custom threshold:", threshold)
-    # print("Predicted classes:")
-    # print(pd.Series(custom_predictions).value_counts())
-
-    # print(f"Accuracy Raw: {custom_accuracy:.2%}")
-    # print("Confusion matrix:")
-    # print(confusion_matrix(y_test, custom_predictions, labels=[0, 1]))
-    # print(f'Precision Raw:{precision:.2%}')
-    # print(f'Recall Raw:{recall:.2%}')
-
-    # print(f"Accuracy Engineered: {custom_accuracy1:.2%}")
-    # print("Confusion matrix:")
-    # print(confusion_matrix(y_test, custom_predictions1, labels=[0, 1]))
-    # print(f'Precision Engineered:{precision1:.2%}')
-    # print(f'Recall Engineered:{recall1:.2%}')
-
     print(f'Total rows trained : {len(X_train)}')
     print(f'Total rows validated : {len(X_val)}')
     print(f'Total rows tested : {len(X_test)}')
@@ -190,14 +129,10 @@ def main():
     print(baseline_model.classes_)
     print(baseline_model.predict(X_val[:5]))
 
-
     print(f'Comparison in percentage: \n{comparison*100}')
     print("Rows:", len(candles_df))
     print("First candle:", candles_df['timestamp'].min())
     print("Last candle:", candles_df['timestamp'].max())
-
-
-    # print(features_df.head())
 
 if __name__ == '__main__':
     main()
